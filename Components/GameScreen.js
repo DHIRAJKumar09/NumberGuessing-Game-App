@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, Button, StyleSheet } from 'react-native';
 
-export default function GameScreen() {
-  const [targetNumber, setTargetNumber] = useState(Math.floor(Math.random() * 100) + 1);
+export default function GameScreen({ route }) {
+  const { range } = route.params;
+  const [targetNumber, setTargetNumber] = useState(Math.floor(Math.random() * range) + 1);
   const [guess, setGuess] = useState('');
   const [feedback, setFeedback] = useState('');
   const [attempts, setAttempts] = useState(0);
@@ -23,7 +24,7 @@ export default function GameScreen() {
   };
 
   const handleRestart = () => {
-    setTargetNumber(Math.floor(Math.random() * 100) + 1);
+    setTargetNumber(Math.floor(Math.random() * range) + 1);
     setGuess('');
     setFeedback('');
     setAttempts(0);
@@ -31,7 +32,7 @@ export default function GameScreen() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Guess the Number (1-100)</Text>
+      <Text style={styles.title}>Guess the Number (1-{range})</Text>
       <TextInput
         style={styles.input}
         keyboardType="numeric"
